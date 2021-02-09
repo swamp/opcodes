@@ -31,5 +31,5 @@ func (c *BranchTrue) Write(writer OpcodeWriter) error {
 }
 
 func (c *BranchTrue) String() string {
-	return fmt.Sprintf("brne %v %v", c.test, c.jump)
+	return fmt.Sprintf("brtr %v %v", c.test, c.jump)
 }

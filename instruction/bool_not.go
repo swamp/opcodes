@@ -24,5 +24,5 @@ func (c *BoolNot) Write(writer OpcodeWriter) error {
 }
 
 func (c *BoolNot) String() string {
-	return "boolornot"
+	return "boolnot"
 }
