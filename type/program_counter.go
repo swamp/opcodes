@@ -33,6 +33,13 @@ func (p ProgramCounter) IsAfter(other ProgramCounter) bool {
 	return p.position > other.position
 }
 
-func (p ProgramCounter) Delta(after ProgramCounter) DeltaPC {
-	return DeltaPC(after.position - p.position)
+func (p ProgramCounter) Delta(after ProgramCounter) (DeltaPC, error) {
+	delta := int(after.position) - int(p.position)
+
+	if delta < 0 || delta > 0xff {
+		return DeltaPC(0), fmt.Errorf("illegal jump. Jumping forward %d, but maximum is 255. Please split your code into separate functions.", delta)
+
+	}
+
+	return DeltaPC(delta), nil
 }

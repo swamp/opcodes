@@ -35,10 +35,10 @@ func (l *LabelInject) ForwardDeltaPC() (swampopcodetype.DeltaPC, error) {
 	targetPc := l.referencedLabel.DefinedProgramCounter()
 	if l.offsetLabel != nil {
 		beforePc := l.offsetLabel.DefinedProgramCounter()
-		newPc := DeltaProgramCounter(targetPc, beforePc)
-		return newPc, nil
+		newPc, newPcErr := DeltaProgramCounter(targetPc, beforePc)
+		return newPc, newPcErr
 	}
-	return DeltaProgramCounter(targetPc, l.logicalOrigoPosition), nil
+	return DeltaProgramCounter(targetPc, l.logicalOrigoPosition)
 }
 
 func (l *LabelInject) LocatedAtPosition() swampopcodetype.ProgramCounter {

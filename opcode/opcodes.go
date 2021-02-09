@@ -16,13 +16,13 @@ type OpCode uint8
 
 type Count uint8
 
-func DeltaProgramCounter(after swampopcodetype.ProgramCounter, before swampopcodetype.ProgramCounter) swampopcodetype.DeltaPC {
+func DeltaProgramCounter(after swampopcodetype.ProgramCounter, before swampopcodetype.ProgramCounter) (swampopcodetype.DeltaPC, error) {
 	if before.IsAfter(after) {
 		panic(fmt.Sprintf("swamp opcodes: illegal delta program counter %v %v", before, after))
 	}
 
-	delta := before.Delta(after)
-	return delta
+	delta, err := before.Delta(after)
+	return delta, err
 }
 
 type Instruction interface {
