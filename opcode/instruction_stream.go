@@ -72,6 +72,14 @@ func (s *Stream) EnumCase(target swampopcodetype.Register, source swampopcodetyp
 	return c
 }
 
+func (s *Stream) CasePatternMatching(target swampopcodetype.Register, source swampopcodetype.Register,
+	jumps []swampopcodeinst.CasePatternMatchingJump) *swampopcodeinst.CasePatternMatching {
+	c := swampopcodeinst.NewCasePatternMatching(target, source, jumps)
+	s.addInstruction(c)
+
+	return c
+}
+
 func (s *Stream) RegCopy(target swampopcodetype.Register, source swampopcodetype.Register) *swampopcodeinst.RegCopy {
 	c := swampopcodeinst.NewRegCopy(target, source)
 	s.addInstruction(c)
