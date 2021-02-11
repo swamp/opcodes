@@ -28,18 +28,19 @@ const (
 	CmdMul = 0x0f
 	CmdDiv = 0x10
 
-	CmdEqual          = 0x11
-	CmdNotEqual       = 0x12
-	CmdLess           = 0x13
-	CmdLessOrEqual    = 0x14
-	CmdGreater        = 0x15
-	CmdGreaterOrEqual = 0x16
-	CmdBitwiseAnd     = 0x17
-	CmdBitwiseOr      = 0x18
-	CmdBitwiseXor     = 0x19
-	CmdBitwiseNot     = 0x1a
-	CmdLogicalNot     = 0x1b
-	CmdBranchTrue     = 0x1c
+	CmdEqual               = 0x11
+	CmdNotEqual            = 0x12
+	CmdLess                = 0x13
+	CmdLessOrEqual         = 0x14
+	CmdGreater             = 0x15
+	CmdGreaterOrEqual      = 0x16
+	CmdBitwiseAnd          = 0x17
+	CmdBitwiseOr           = 0x18
+	CmdBitwiseXor          = 0x19
+	CmdBitwiseNot          = 0x1a
+	CmdLogicalNot          = 0x1b
+	CmdBranchTrue          = 0x1c
+	CmdCasePatternMatching = 0x1d
 
 	CmdCurry        = 0x20
 	CmdCreateList   = 0x21
@@ -53,41 +54,42 @@ const (
 
 func OpcodeToName(cmd Commands) string {
 	names := map[Commands]string{
-		CmdCreateStruct:   "crs",
-		CmdUpdateStruct:   "upd",
-		CmdStructGet:      "get",
-		CmdRegCopy:        "lr",
-		CmdListConj:       "conj",
-		CmdEnumCase:       "case",
-		CmdBranchFalse:    "bne",
-		CmdJump:           "jmp",
-		CmdCall:           "call",
-		CmdReturn:         "ret",
-		CmdCallExternal:   "ecall",
-		CmdTailCall:       "tcl",
-		CmdAdd:            "add",
-		CmdSub:            "sub",
-		CmdMul:            "mul",
-		CmdDiv:            "div",
-		CmdEqual:          "cpeq",
-		CmdNotEqual:       "cpne",
-		CmdLess:           "cpl",
-		CmdLessOrEqual:    "cple",
-		CmdGreater:        "cpg",
-		CmdGreaterOrEqual: "cpge",
-		CmdBitwiseAnd:     "band",
-		CmdBitwiseOr:      "bor",
-		CmdBitwiseXor:     "bxor",
-		CmdBitwiseNot:     "bnot",
-		CmdLogicalNot:     "not",
-		CmdBranchTrue:     "brt",
-		CmdCurry:          "curry",
-		CmdCreateList:     "crl",
-		CmdListAppend:     "lap",
-		CmdCreateEnum:     "cre",
-		CmdStringAppend:   "sap",
-		CmdFixedMul:       "fxmul",
-		CmdFixedDiv:       "fxdiv",
+		CmdCreateStruct:        "crs",
+		CmdUpdateStruct:        "upd",
+		CmdStructGet:           "get",
+		CmdRegCopy:             "lr",
+		CmdListConj:            "conj",
+		CmdEnumCase:            "case",
+		CmdCasePatternMatching: "csep",
+		CmdBranchFalse:         "bne",
+		CmdJump:                "jmp",
+		CmdCall:                "call",
+		CmdReturn:              "ret",
+		CmdCallExternal:        "ecall",
+		CmdTailCall:            "tcl",
+		CmdAdd:                 "add",
+		CmdSub:                 "sub",
+		CmdMul:                 "mul",
+		CmdDiv:                 "div",
+		CmdEqual:               "cpeq",
+		CmdNotEqual:            "cpne",
+		CmdLess:                "cpl",
+		CmdLessOrEqual:         "cple",
+		CmdGreater:             "cpg",
+		CmdGreaterOrEqual:      "cpge",
+		CmdBitwiseAnd:          "band",
+		CmdBitwiseOr:           "bor",
+		CmdBitwiseXor:          "bxor",
+		CmdBitwiseNot:          "bnot",
+		CmdLogicalNot:          "not",
+		CmdBranchTrue:          "brt",
+		CmdCurry:               "curry",
+		CmdCreateList:          "crl",
+		CmdListAppend:          "lap",
+		CmdCreateEnum:          "cre",
+		CmdStringAppend:        "sap",
+		CmdFixedMul:            "fxmul",
+		CmdFixedDiv:            "fxdiv",
 	}
 
 	return names[cmd]
