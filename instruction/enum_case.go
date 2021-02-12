@@ -26,18 +26,16 @@ func (e EnumCaseJump) String() string {
 }
 
 type EnumCase struct {
-	destination swampopcodetype.Register
-	source      swampopcodetype.Register
-	jumps       []EnumCaseJump
+	source swampopcodetype.Register
+	jumps  []EnumCaseJump
 }
 
-func NewEnumCase(destination swampopcodetype.Register, source swampopcodetype.Register, jumps []EnumCaseJump) *EnumCase {
-	return &EnumCase{destination: destination, source: source, jumps: jumps}
+func NewEnumCase(source swampopcodetype.Register, jumps []EnumCaseJump) *EnumCase {
+	return &EnumCase{source: source, jumps: jumps}
 }
 
 func (c *EnumCase) Write(writer OpcodeWriter) error {
 	writer.Command(CmdEnumCase)
-	writer.Register(c.destination)
 	writer.Register(c.source)
 
 	writer.Count(len(c.jumps))
@@ -65,5 +63,5 @@ func (c *EnumCase) Write(writer OpcodeWriter) error {
 }
 
 func (c *EnumCase) String() string {
-	return fmt.Sprintf("cse %v %v %v", c.destination, c.source, c.jumps)
+	return fmt.Sprintf("cse %v %v", c.source, c.jumps)
 }

@@ -11,59 +11,65 @@ type BinaryOperatorType uint8
 
 // The binary operator types.
 const (
-	BinaryOperatorArithmeticPlus          BinaryOperatorType = 0x01
-	BinaryOperatorArithmeticMinus         BinaryOperatorType = 0x02
-	BinaryOperatorArithmeticDivide        BinaryOperatorType = 0x03
-	BinaryOperatorArithmeticMultiply      BinaryOperatorType = 0x04
-	BinaryOperatorBooleanEqual            BinaryOperatorType = 0x05
-	BinaryOperatorBooleanNotEqual         BinaryOperatorType = 0x06
-	BinaryOperatorBooleanLess             BinaryOperatorType = 0x07
-	BinaryOperatorBooleanLessOrEqual      BinaryOperatorType = 0x08
-	BinaryOperatorBooleanGreater          BinaryOperatorType = 0x09
-	BinaryOperatorBooleanGreaterOrEqual   BinaryOperatorType = 0x0a
-	BinaryOperatorBitwiseAnd              BinaryOperatorType = 0x0b
-	BinaryOperatorBitwiseOr               BinaryOperatorType = 0x0c
-	BinaryOperatorBitwiseXor              BinaryOperatorType = 0x0d
-	BinaryOperatorArithmeticAppend        BinaryOperatorType = 0x0e
-	BinaryOperatorArithmeticFixedDivide   BinaryOperatorType = 0x0f
-	BinaryOperatorArithmeticFixedMultiply BinaryOperatorType = 0x10
+	BinaryOperatorArithmeticIntPlus BinaryOperatorType = iota
+	BinaryOperatorArithmeticIntMinus
+	BinaryOperatorArithmeticIntDivide
+	BinaryOperatorArithmeticIntMultiply
+	BinaryOperatorBooleanIntEqual
+	BinaryOperatorBooleanIntNotEqual
+	BinaryOperatorBooleanIntLess
+	BinaryOperatorBooleanIntLessOrEqual
+	BinaryOperatorBooleanIntGreater
+	BinaryOperatorBooleanIntGreaterOrEqual
+	BinaryOperatorBitwiseIntAnd
+	BinaryOperatorBitwiseIntOr
+	BinaryOperatorBitwiseIntXor
+	BinaryOperatorArithmeticListAppend
+	BinaryOperatorArithmeticFixedDivide
+	BinaryOperatorArithmeticFixedMultiply
+	BinaryOperatorBooleanValueEqual
+	BinaryOperatorBooleanValueNotEqual
 )
 
 // BinaryOperatorToOpCode converts from the type of binary operator to the actual opcode instruction.
 func BinaryOperatorToOpCode(operator BinaryOperatorType) Commands {
 	switch operator {
-	case BinaryOperatorArithmeticPlus:
-		return CmdAdd
-	case BinaryOperatorArithmeticMinus:
-		return CmdSub
-	case BinaryOperatorArithmeticDivide:
-		return CmdDiv
-	case BinaryOperatorArithmeticMultiply:
-		return CmdMul
+	case BinaryOperatorArithmeticIntPlus:
+		return CmdIntAdd
+	case BinaryOperatorArithmeticIntMinus:
+		return CmdIntSub
+	case BinaryOperatorArithmeticIntDivide:
+		return CmdIntDiv
+	case BinaryOperatorArithmeticIntMultiply:
+		return CmdIntMul
 	case BinaryOperatorArithmeticFixedDivide:
 		return CmdFixedDiv
 	case BinaryOperatorArithmeticFixedMultiply:
 		return CmdFixedMul
-	case BinaryOperatorArithmeticAppend:
+	case BinaryOperatorArithmeticListAppend:
 		return CmdListAppend
-	case BinaryOperatorBooleanEqual:
-		return CmdEqual
-	case BinaryOperatorBooleanNotEqual:
-		return CmdNotEqual
-	case BinaryOperatorBooleanLess:
-		return CmdLess
-	case BinaryOperatorBooleanLessOrEqual:
-		return CmdLessOrEqual
-	case BinaryOperatorBooleanGreater:
-		return CmdGreater
-	case BinaryOperatorBooleanGreaterOrEqual:
-		return CmdGreaterOrEqual
-	case BinaryOperatorBitwiseAnd:
-		return CmdBitwiseAnd
-	case BinaryOperatorBitwiseOr:
-		return CmdBitwiseOr
-	case BinaryOperatorBitwiseXor:
-		return CmdBitwiseXor
+	case BinaryOperatorBooleanIntEqual:
+		return CmdIntEqual
+	case BinaryOperatorBooleanIntNotEqual:
+		return CmdIntNotEqual
+	case BinaryOperatorBooleanIntLess:
+		return CmdIntLess
+	case BinaryOperatorBooleanIntLessOrEqual:
+		return CmdIntLessOrEqual
+	case BinaryOperatorBooleanIntGreater:
+		return CmdIntGreater
+	case BinaryOperatorBooleanIntGreaterOrEqual:
+		return CmdIntGreaterOrEqual
+	case BinaryOperatorBitwiseIntAnd:
+		return CmdIntBitwiseAnd
+	case BinaryOperatorBitwiseIntOr:
+		return CmdIntBitwiseOr
+	case BinaryOperatorBitwiseIntXor:
+		return CmdIntBitwiseXor
+	case BinaryOperatorBooleanValueEqual:
+		return CmdValueEqual
+	case BinaryOperatorBooleanValueNotEqual:
+		return CmdValueNotEqual
 	}
 
 	panic("swamp opcodes: unknown binary operator")

@@ -11,14 +11,14 @@ import (
 	swampopcodetype "github.com/swamp/opcodes/type"
 )
 
-type IntBinaryOperator struct {
+type BinaryOperator struct {
 	opcode      Commands
 	a           swampopcodetype.Register
 	b           swampopcodetype.Register
 	destination swampopcodetype.Register
 }
 
-func (c *IntBinaryOperator) Write(writer OpcodeWriter) error {
+func (c *BinaryOperator) Write(writer OpcodeWriter) error {
 	writer.Command(c.opcode)
 	writer.Register(c.destination)
 	writer.Register(c.a)
@@ -27,10 +27,10 @@ func (c *IntBinaryOperator) Write(writer OpcodeWriter) error {
 	return nil
 }
 
-func NewIntBinaryOperator(opcode Commands, destination swampopcodetype.Register, a swampopcodetype.Register, b swampopcodetype.Register) *IntBinaryOperator {
-	return &IntBinaryOperator{opcode: opcode, destination: destination, a: a, b: b}
+func NewBinaryOperator(opcode Commands, destination swampopcodetype.Register, a swampopcodetype.Register, b swampopcodetype.Register) *BinaryOperator {
+	return &BinaryOperator{opcode: opcode, destination: destination, a: a, b: b}
 }
 
-func (c *IntBinaryOperator) String() string {
+func (c *BinaryOperator) String() string {
 	return fmt.Sprintf("%s %v,%v,%v", OpcodeToName(c.opcode), c.destination, c.a, c.b)
 }

@@ -11,15 +11,18 @@ import (
 
 // BoolNot inverts the specified register and puts the result in the destination register.
 type BoolNot struct {
-	a           swampopcodetype.Register
-	destination swampopcodetype.Register
+	source swampopcodetype.Register
+	target swampopcodetype.Register
 }
 
-func NewBoolNot(destination swampopcodetype.Register, a swampopcodetype.Register) *BoolNot {
-	return &BoolNot{destination: destination, a: a}
+func NewBoolNot(target swampopcodetype.Register, source swampopcodetype.Register) *BoolNot {
+	return &BoolNot{target: target, source: source}
 }
 
 func (c *BoolNot) Write(writer OpcodeWriter) error {
+	writer.Command(CmdBoolLogicalNot)
+	writer.Register(c.target)
+	writer.Register(c.source)
 	return nil
 }
 

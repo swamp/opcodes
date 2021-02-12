@@ -23,24 +23,30 @@ const (
 	CmdCallExternal = 0x0b
 	CmdTailCall     = 0x0c
 
-	CmdAdd = 0x0d
-	CmdSub = 0x0e
-	CmdMul = 0x0f
-	CmdDiv = 0x10
+	CmdIntAdd = 0x0d
+	CmdIntSub = 0x0e
+	CmdIntMul = 0x0f
+	CmdIntDiv = 0x10
 
-	CmdEqual               = 0x11
-	CmdNotEqual            = 0x12
-	CmdLess                = 0x13
-	CmdLessOrEqual         = 0x14
-	CmdGreater             = 0x15
-	CmdGreaterOrEqual      = 0x16
-	CmdBitwiseAnd          = 0x17
-	CmdBitwiseOr           = 0x18
-	CmdBitwiseXor          = 0x19
-	CmdBitwiseNot          = 0x1a
-	CmdLogicalNot          = 0x1b
+	// Boolean operators
+	CmdIntEqual          = 0x11
+	CmdIntNotEqual       = 0x12
+	CmdIntLess           = 0x13
+	CmdIntLessOrEqual    = 0x14
+	CmdIntGreater        = 0x15
+	CmdIntGreaterOrEqual = 0x16
+
+	// Bitwise operators
+	CmdIntBitwiseAnd = 0x17
+	CmdIntBitwiseOr  = 0x18
+	CmdIntBitwiseXor = 0x19
+	CmdIntBitwiseNot = 0x1a
+
+	CmdBoolLogicalNot      = 0x1b
 	CmdBranchTrue          = 0x1c
 	CmdCasePatternMatching = 0x1d
+	CmdValueEqual          = 0x1e
+	CmdValueNotEqual       = 0x1f
 
 	CmdCurry        = 0x20
 	CmdCreateList   = 0x21
@@ -60,29 +66,31 @@ func OpcodeToName(cmd Commands) string {
 		CmdRegCopy:             "lr",
 		CmdListConj:            "conj",
 		CmdEnumCase:            "case",
-		CmdCasePatternMatching: "csep",
 		CmdBranchFalse:         "bne",
 		CmdJump:                "jmp",
 		CmdCall:                "call",
 		CmdReturn:              "ret",
 		CmdCallExternal:        "ecall",
 		CmdTailCall:            "tcl",
-		CmdAdd:                 "add",
-		CmdSub:                 "sub",
-		CmdMul:                 "mul",
-		CmdDiv:                 "div",
-		CmdEqual:               "cpeq",
-		CmdNotEqual:            "cpne",
-		CmdLess:                "cpl",
-		CmdLessOrEqual:         "cple",
-		CmdGreater:             "cpg",
-		CmdGreaterOrEqual:      "cpge",
-		CmdBitwiseAnd:          "band",
-		CmdBitwiseOr:           "bor",
-		CmdBitwiseXor:          "bxor",
-		CmdBitwiseNot:          "bnot",
-		CmdLogicalNot:          "not",
+		CmdIntAdd:              "add",
+		CmdIntSub:              "sub",
+		CmdIntMul:              "mul",
+		CmdIntDiv:              "div",
+		CmdIntEqual:            "cpeq",
+		CmdIntNotEqual:         "cpne",
+		CmdIntLess:             "cpl",
+		CmdIntLessOrEqual:      "cple",
+		CmdIntGreater:          "cpg",
+		CmdIntGreaterOrEqual:   "cpge",
+		CmdIntBitwiseAnd:       "band",
+		CmdIntBitwiseOr:        "bor",
+		CmdIntBitwiseXor:       "bxor",
+		CmdIntBitwiseNot:       "bnot",
+		CmdBoolLogicalNot:      "not",
 		CmdBranchTrue:          "brt",
+		CmdCasePatternMatching: "csep",
+		CmdValueEqual:          "cpve",
+		CmdValueNotEqual:       "cpvne",
 		CmdCurry:               "curry",
 		CmdCreateList:          "crl",
 		CmdListAppend:          "lap",

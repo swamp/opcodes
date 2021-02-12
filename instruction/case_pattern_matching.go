@@ -25,19 +25,17 @@ func (e CasePatternMatchingJump) String() string {
 }
 
 type CasePatternMatching struct {
-	destination swampopcodetype.Register
-	source      swampopcodetype.Register
-	jumps       []CasePatternMatchingJump
+	source swampopcodetype.Register
+	jumps  []CasePatternMatchingJump
 }
 
-func NewCasePatternMatching(destination swampopcodetype.Register, source swampopcodetype.Register,
+func NewCasePatternMatching(source swampopcodetype.Register,
 	jumps []CasePatternMatchingJump) *CasePatternMatching {
-	return &CasePatternMatching{destination: destination, source: source, jumps: jumps}
+	return &CasePatternMatching{source: source, jumps: jumps}
 }
 
 func (c *CasePatternMatching) Write(writer OpcodeWriter) error {
 	writer.Command(CmdCasePatternMatching)
-	writer.Register(c.destination)
 	writer.Register(c.source)
 
 	writer.Count(len(c.jumps))
@@ -60,5 +58,5 @@ func (c *CasePatternMatching) Write(writer OpcodeWriter) error {
 }
 
 func (c *CasePatternMatching) String() string {
-	return fmt.Sprintf("csep %v %v %v", c.destination, c.source, c.jumps)
+	return fmt.Sprintf("csep %v %v", c.source, c.jumps)
 }

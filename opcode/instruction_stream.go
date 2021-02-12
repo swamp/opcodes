@@ -64,17 +64,17 @@ func (s *Stream) GetStruct(target swampopcodetype.Register, source swampopcodety
 	return c
 }
 
-func (s *Stream) EnumCase(target swampopcodetype.Register, source swampopcodetype.Register,
+func (s *Stream) EnumCase(source swampopcodetype.Register,
 	jumps []swampopcodeinst.EnumCaseJump) *swampopcodeinst.EnumCase {
-	c := swampopcodeinst.NewEnumCase(target, source, jumps)
+	c := swampopcodeinst.NewEnumCase(source, jumps)
 	s.addInstruction(c)
 
 	return c
 }
 
-func (s *Stream) CasePatternMatching(target swampopcodetype.Register, source swampopcodetype.Register,
+func (s *Stream) CasePatternMatching(source swampopcodetype.Register,
 	jumps []swampopcodeinst.CasePatternMatchingJump) *swampopcodeinst.CasePatternMatching {
-	c := swampopcodeinst.NewCasePatternMatching(target, source, jumps)
+	c := swampopcodeinst.NewCasePatternMatching(source, jumps)
 	s.addInstruction(c)
 
 	return c
@@ -158,11 +158,11 @@ func (s *Stream) BranchTrue(test swampopcodetype.Register, jump *swampopcodetype
 	return c
 }
 
-func (s *Stream) IntBinaryOperator(destination swampopcodetype.Register,
+func (s *Stream) BinaryOperator(destination swampopcodetype.Register,
 	operatorType swampopcodeinst.BinaryOperatorType, a swampopcodetype.Register,
-	b swampopcodetype.Register) *swampopcodeinst.IntBinaryOperator {
+	b swampopcodetype.Register) *swampopcodeinst.BinaryOperator {
 	opcode := swampopcodeinst.BinaryOperatorToOpCode(operatorType)
-	c := swampopcodeinst.NewIntBinaryOperator(opcode, destination, a, b)
+	c := swampopcodeinst.NewBinaryOperator(opcode, destination, a, b)
 	s.addInstruction(c)
 	return c
 }
@@ -197,6 +197,7 @@ func (s *Stream) BoolNot(destination swampopcodetype.Register, a swampopcodetype
 
 func (s *Stream) Serialize() ([]byte, error) {
 	writer := NewOpCodeStream()
+
 	for _, instruction := range s.instructions {
 		lbl, _ := instruction.(*VirtualLabel)
 		if lbl != nil {
@@ -214,10 +215,13 @@ func (s *Stream) Serialize() ([]byte, error) {
 
 	beforeOctets := writer.Octets()
 	block := NewOctetBlock(beforeOctets)
+
 	fixupErr := block.FixUpLabelInjects(writer.LabelInjects())
 	if fixupErr != nil {
 		return nil, fixupErr
 	}
+
 	fixedUpOctets := block.Octets()
+
 	return fixedUpOctets, nil
 }

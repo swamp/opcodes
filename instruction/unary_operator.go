@@ -8,16 +8,16 @@ package swampopcodeinst
 type UnaryOperatorType uint8
 
 const (
-	UnaryOperatorBitwiseNot UnaryOperatorType = 0x01
-	UnaryOperatorNot        UnaryOperatorType = 0x02
+	UnaryOperatorBitwiseNot UnaryOperatorType = iota
+	UnaryOperatorNot
 )
 
 func UnaryOperatorToOpCode(operator UnaryOperatorType) Commands {
 	switch operator {
 	case UnaryOperatorBitwiseNot:
-		return CmdBitwiseNot
+		return CmdIntBitwiseNot
 	case UnaryOperatorNot:
-		return CmdLogicalNot
+		return CmdBoolLogicalNot
 	}
 
 	panic("swamp opcodes: illegal unary operator")
