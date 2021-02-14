@@ -54,8 +54,9 @@ const (
 	CmdCreateEnum   = 0x23
 	CmdStringAppend = 0x24
 
-	CmdFixedMul = 0x25
-	CmdFixedDiv = 0x26
+	CmdFixedMul  = 0x25
+	CmdFixedDiv  = 0x26
+	CmdIntNegate = 0x27
 )
 
 func OpcodeToName(cmd Commands) string {
@@ -98,6 +99,7 @@ func OpcodeToName(cmd Commands) string {
 		CmdStringAppend:        "sap",
 		CmdFixedMul:            "fxmul",
 		CmdFixedDiv:            "fxdiv",
+		CmdIntNegate:           "neg",
 	}
 
 	return names[cmd]

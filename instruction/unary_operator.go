@@ -10,6 +10,7 @@ type UnaryOperatorType uint8
 const (
 	UnaryOperatorBitwiseNot UnaryOperatorType = iota
 	UnaryOperatorNot
+	UnaryOperatorNegate
 )
 
 func UnaryOperatorToOpCode(operator UnaryOperatorType) Commands {
@@ -18,6 +19,8 @@ func UnaryOperatorToOpCode(operator UnaryOperatorType) Commands {
 		return CmdIntBitwiseNot
 	case UnaryOperatorNot:
 		return CmdBoolLogicalNot
+	case UnaryOperatorNegate:
+		return CmdIntNegate
 	}
 
 	panic("swamp opcodes: illegal unary operator")

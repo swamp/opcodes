@@ -189,12 +189,6 @@ func (s *Stream) IntUnaryOperator(destination swampopcodetype.Register, operator
 	return c
 }
 
-func (s *Stream) BoolNot(destination swampopcodetype.Register, a swampopcodetype.Register) *swampopcodeinst.BoolNot {
-	c := swampopcodeinst.NewBoolNot(destination, a)
-	s.addInstruction(c)
-	return c
-}
-
 func (s *Stream) Serialize() ([]byte, error) {
 	writer := NewOpCodeStream()
 
