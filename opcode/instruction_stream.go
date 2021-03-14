@@ -43,6 +43,13 @@ func (s *Stream) CreateStruct(destination swampopcodetype.Register,
 	return c
 }
 
+func (s *Stream) StructSplit(source swampopcodetype.Register,
+	destinations []swampopcodetype.Register) *swampopcodeinst.StructSplit {
+	c := swampopcodeinst.NewStructSplit(source, destinations)
+	s.addInstruction(c)
+	return c
+}
+
 func (s *Stream) CreateList(destination swampopcodetype.Register,
 	arguments []swampopcodetype.Register) *swampopcodeinst.CreateList {
 	c := swampopcodeinst.NewCreateList(destination, arguments)

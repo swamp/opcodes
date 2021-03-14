@@ -54,9 +54,10 @@ const (
 	CmdCreateEnum   = 0x23
 	CmdStringAppend = 0x24
 
-	CmdFixedMul  = 0x25
-	CmdFixedDiv  = 0x26
-	CmdIntNegate = 0x27
+	CmdFixedMul    = 0x25
+	CmdFixedDiv    = 0x26
+	CmdIntNegate   = 0x27
+	CmdStructSplit = 0x28
 )
 
 func OpcodeToName(cmd Commands) string {
