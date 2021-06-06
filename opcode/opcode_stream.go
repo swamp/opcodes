@@ -70,6 +70,11 @@ func (s *OpCodeStream) Count(c int) {
 	s.Write(uint8(c))
 }
 
+func (s *OpCodeStream) TypeIDConstant(c uint16) {
+	s.Write(uint8(c >> 8))
+	s.Write(uint8(c & 0xff))
+}
+
 func (s *OpCodeStream) Command(cmd swampopcodeinst.Commands) {
 	s.Write(uint8(cmd))
 }

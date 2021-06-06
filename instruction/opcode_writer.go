@@ -17,5 +17,6 @@ type OpcodeWriter interface {
 	LabelWithOffset(l *swampopcodetype.Label, offset *swampopcodetype.Label)
 	EnumValue(v uint8)
 	Count(c int)
+	TypeIDConstant(c uint16)
 	Command(cmd Commands)
 }

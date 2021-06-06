@@ -12,18 +12,22 @@ import (
 )
 
 type Curry struct {
-	target    swampopcodetype.Register
-	function  swampopcodetype.Register
-	arguments []swampopcodetype.Register
+	target         swampopcodetype.Register
+	typeIDConstant uint16
+	function       swampopcodetype.Register
+	arguments      []swampopcodetype.Register
 }
 
-func NewCurry(target swampopcodetype.Register, function swampopcodetype.Register, arguments []swampopcodetype.Register) *Curry {
-	return &Curry{target: target, function: function, arguments: arguments}
+func NewCurry(target swampopcodetype.Register, typeIDConstant uint16,
+	function swampopcodetype.Register, arguments []swampopcodetype.Register) *Curry {
+	return &Curry{target: target, typeIDConstant: typeIDConstant,
+		function: function, arguments: arguments}
 }
 
 func (c *Curry) Write(writer OpcodeWriter) error {
 	writer.Command(CmdCurry)
 	writer.Register(c.target)
+	writer.TypeIDConstant(c.typeIDConstant)
 	writer.Register(c.function)
 	writer.Count(len(c.arguments))
 
@@ -35,5 +39,5 @@ func (c *Curry) Write(writer OpcodeWriter) error {
 }
 
 func (c *Curry) String() string {
-	return fmt.Sprintf("curry %v %v (%v)", c.target, c.function, c.arguments)
+	return fmt.Sprintf("curry %v (%v) %v (%v)", c.target, c.typeIDConstant, c.function, c.arguments)
 }

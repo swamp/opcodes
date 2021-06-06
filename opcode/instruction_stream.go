@@ -107,9 +107,9 @@ func (s *Stream) Call(target swampopcodetype.Register, function swampopcodetype.
 	return c
 }
 
-func (s *Stream) Curry(target swampopcodetype.Register, function swampopcodetype.Register,
+func (s *Stream) Curry(target swampopcodetype.Register, typeIDConstant uint16, function swampopcodetype.Register,
 	arguments []swampopcodetype.Register) *swampopcodeinst.Curry {
-	c := swampopcodeinst.NewCurry(target, function, arguments)
+	c := swampopcodeinst.NewCurry(target, typeIDConstant, function, arguments)
 	s.addInstruction(c)
 	return c
 }
