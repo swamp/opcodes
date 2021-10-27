@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-package swampopcodetype
+package opcode_sp_type
 
 import "fmt"
 
-type DeltaPC uint8
+type DeltaPC uint16
 
 type ProgramCounter struct {
 	position uint16
 }
 
 func (p ProgramCounter) String() string {
-	return fmt.Sprintf("@%02x", p.position)
+	return fmt.Sprintf("@%04x", p.position)
 }
 
 func NewProgramCounter(position uint16) ProgramCounter {
@@ -36,9 +36,8 @@ func (p ProgramCounter) IsAfter(other ProgramCounter) bool {
 func (p ProgramCounter) Delta(after ProgramCounter) (DeltaPC, error) {
 	delta := int(after.position) - int(p.position)
 
-	if delta < 0 || delta > 0xff {
-		return DeltaPC(0), fmt.Errorf("illegal jump. Jumping forward %d, but maximum is 255. Please split your code into separate functions.", delta)
-
+	if delta < 0 || delta > 0xffff {
+		return DeltaPC(0), fmt.Errorf("illegal jump. Jumping forward %d, but maximum is 65535. Please split your code into separate functions.", delta)
 	}
 
 	return DeltaPC(delta), nil
