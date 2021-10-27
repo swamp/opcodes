@@ -19,6 +19,18 @@ type (
 	MemoryAlign  uint32
 )
 
+const (
+	Sizeof64BitPointer  MemorySize  = 8
+	Alignof64BitPointer MemoryAlign = 8
+	SizeofSwampInt      MemorySize  = 4
+	SizeofSwampRune     MemorySize  = 4
+	SizeofSwampBool     MemorySize  = 1
+
+	AlignOfSwampBool = MemoryAlign(SizeofSwampBool)
+	AlignOfSwampRune = MemoryAlign(SizeofSwampRune)
+	AlignOfSwampInt  = MemoryAlign(SizeofSwampInt)
+)
+
 type StackRange uint16
 
 type SourceStackRange StackRange
