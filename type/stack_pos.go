@@ -13,7 +13,11 @@ func (r StackPosition) String() string {
 	return fmt.Sprintf("%v", uint32(r))
 }
 
-type MemoryAlign uint8
+type (
+	MemoryOffset uint32
+	MemorySize   uint32
+	MemoryAlign  uint32
+)
 
 type StackRange uint16
 
