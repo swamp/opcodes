@@ -31,6 +31,9 @@ const (
 	BinaryOperatorBooleanStringNotEqual
 	BinaryOperatorBooleanEnumEqual
 	BinaryOperatorBooleanEnumNotEqual
+	BinaryOperatorBitwiseShiftLeft
+	BinaryOperatorBitwiseShiftRight
+	BinaryOperatorBitwiseNot
 )
 
 // BinaryOperatorToOpCode converts from the type of binary operator to the actual opcode instruction.
@@ -68,6 +71,12 @@ func BinaryOperatorToOpCode(operator BinaryOperatorType) Commands {
 		return CmdIntBitwiseOr
 	case BinaryOperatorBitwiseIntXor:
 		return CmdIntBitwiseXor
+	case BinaryOperatorBitwiseShiftLeft:
+		return CmdIntBitwiseShiftLeft
+	case BinaryOperatorBitwiseShiftRight:
+		return CmdIntBitwiseShiftLeft
+	case BinaryOperatorBitwiseNot:
+		return CmdIntBitwiseNot
 	}
 
 	panic("swamp opcodes: unknown binary operator")

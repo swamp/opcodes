@@ -120,6 +120,8 @@ func OpcodeToMnemonic(cmd Commands) string {
 		CmdIntBitwiseOr:               "ori",
 		CmdIntBitwiseXor:              "xori",
 		CmdIntBitwiseNot:              "noti",
+		CmdIntBitwiseShiftLeft:        "shl",
+		CmdIntBitwiseShiftRight:       "shr",
 		CmdBoolLogicalNot:             "not",
 		CmdBranchTrue:                 "brt",
 		CmdCurry:                      "curry",
