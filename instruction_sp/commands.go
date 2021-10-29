@@ -84,6 +84,10 @@ const (
 	CmdPatternMatchingString Commands = 0x2d
 
 	CmdCallExternalWithSizesAlign Commands = 0x2e
+
+	CmdIntBitwiseShiftLeft  = 0x2f
+	CmdIntBitwiseShiftRight = 0x30
+	CmdIntRemainder         = 0x31
 )
 
 func OpcodeToMnemonic(cmd Commands) string {
