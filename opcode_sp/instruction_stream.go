@@ -139,8 +139,8 @@ func (s *Stream) Return() *instruction_sp.Return {
 }
 
 func (s *Stream) ListConj(destination opcode_sp_type.TargetStackPosition, list opcode_sp_type.SourceStackPosition,
-	item opcode_sp_type.SourceStackPosition) *instruction_sp.ListConj {
-	c := instruction_sp.NewListConj(destination, item, list)
+	item opcode_sp_type.SourceStackPosition, itemSize opcode_sp_type.StackRange, itemAlign opcode_sp_type.MemoryAlign) *instruction_sp.ListConj {
+	c := instruction_sp.NewListConj(destination, item, itemSize, itemAlign, list)
 	s.addInstruction(c)
 	return c
 }
