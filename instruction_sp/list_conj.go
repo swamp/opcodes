@@ -32,7 +32,7 @@ func (c *ListConj) Write(writer OpcodeWriter) error {
 
 func NewListConj(destination opcode_sp_type.TargetStackPosition, item opcode_sp_type.SourceStackPosition,
 	itemSize opcode_sp_type.StackRange, itemAlign opcode_sp_type.MemoryAlign, list opcode_sp_type.SourceStackPosition) *ListConj {
-	return &ListConj{destination: destination, item: item, list: list}
+	return &ListConj{destination: destination, item: item, itemSize: itemSize, itemAlign: itemAlign, list: list}
 }
 
 func (c *ListConj) String() string {
