@@ -14,6 +14,7 @@ const (
 	BinaryOperatorArithmeticIntPlus BinaryOperatorType = iota
 	BinaryOperatorArithmeticIntMinus
 	BinaryOperatorArithmeticIntDivide
+	BinaryOperatorArithmeticIntRemainder
 	BinaryOperatorArithmeticIntMultiply
 	BinaryOperatorBooleanIntEqual
 	BinaryOperatorBooleanIntNotEqual
@@ -45,6 +46,8 @@ func BinaryOperatorToOpCode(operator BinaryOperatorType) Commands {
 		return CmdIntSub
 	case BinaryOperatorArithmeticIntDivide:
 		return CmdIntDiv
+	case BinaryOperatorArithmeticIntRemainder:
+		return CmdIntRemainder
 	case BinaryOperatorArithmeticIntMultiply:
 		return CmdIntMul
 	case BinaryOperatorArithmeticFixedDivide:

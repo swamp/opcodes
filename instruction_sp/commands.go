@@ -106,6 +106,7 @@ func OpcodeToMnemonic(cmd Commands) string {
 		CmdIntSub:                     "subi",
 		CmdIntMul:                     "muli",
 		CmdIntDiv:                     "divi",
+		CmdIntRemainder:               "remi",
 		CmdIntEqual:                   "cpeqi",
 		CmdIntNotEqual:                "cpnei",
 		CmdIntLess:                    "cplti",
