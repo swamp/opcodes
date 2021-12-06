@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-// Package swampopcodeinst holds all the instructions for the Swamp runtime.
+// Package instruction_sp holds all the instructions for the Swamp runtime.
 package instruction_sp
 
 // BinaryOperatorType defines the type of binary operator.
@@ -32,6 +32,8 @@ const (
 	BinaryOperatorBooleanStringNotEqual
 	BinaryOperatorBooleanEnumEqual
 	BinaryOperatorBooleanEnumNotEqual
+	BinaryOperatorBooleanBooleanEqual
+	BinaryOperatorBooleanBooleanNotEqual
 	BinaryOperatorBitwiseShiftLeft
 	BinaryOperatorBitwiseShiftRight
 	BinaryOperatorBitwiseNot
@@ -60,6 +62,14 @@ func BinaryOperatorToOpCode(operator BinaryOperatorType) Commands {
 		return CmdIntEqual
 	case BinaryOperatorBooleanIntNotEqual:
 		return CmdIntNotEqual
+	case BinaryOperatorBooleanEnumEqual:
+		return CmdEnumEqual
+	case BinaryOperatorBooleanEnumNotEqual:
+		return CmdEnumNotEqual
+	case BinaryOperatorBooleanBooleanEqual:
+		return CmdBoolEqual
+	case BinaryOperatorBooleanBooleanNotEqual:
+		return CmdBoolNotEqual
 	case BinaryOperatorBooleanIntLess:
 		return CmdIntLess
 	case BinaryOperatorBooleanIntLessOrEqual:
@@ -106,5 +116,17 @@ func BinaryEnumOperatorToOpCode(operator BinaryOperatorType) Commands {
 		return CmdEnumNotEqual
 	}
 
-	panic("swamp opcodes: unknown string binary operator")
+	panic("swamp opcodes: unknown enum binary operator")
+}
+
+// BinaryEnumOperatorToOpCode converts from the type of binary operator to the actual opcode instruction.
+func BinaryBooleanOperatorToOpCode(operator BinaryOperatorType) Commands {
+	switch operator {
+	case BinaryOperatorBooleanBooleanEqual:
+		return CmdBoolEqual
+	case BinaryOperatorBooleanBooleanNotEqual:
+		return CmdBoolNotEqual
+	}
+
+	panic("swamp opcodes: unknown boolean binary operator")
 }

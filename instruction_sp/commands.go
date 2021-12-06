@@ -85,9 +85,13 @@ const (
 
 	CmdCallExternalWithSizesAlign Commands = 0x2e
 
-	CmdIntBitwiseShiftLeft  = 0x2f
-	CmdIntBitwiseShiftRight = 0x30
-	CmdIntRemainder         = 0x31
+	CmdIntBitwiseShiftLeft  Commands = 0x2f
+	CmdIntBitwiseShiftRight Commands = 0x30
+	CmdIntRemainder         Commands = 0x31
+
+	// bool equals
+	CmdBoolEqual    Commands = 0x32 // Bool XNOR
+	CmdBoolNotEqual Commands = 0x33 // Bool XOR
 )
 
 func OpcodeToMnemonic(cmd Commands) string {
@@ -117,6 +121,8 @@ func OpcodeToMnemonic(cmd Commands) string {
 		CmdStringNotEqual:             "cpnes",
 		CmdEnumEqual:                  "cpeqe",
 		CmdEnumNotEqual:               "cpnee",
+		CmdBoolEqual:                  "cpeq",
+		CmdBoolNotEqual:               "cpne",
 		CmdIntBitwiseAnd:              "andi",
 		CmdIntBitwiseOr:               "ori",
 		CmdIntBitwiseXor:              "xori",
