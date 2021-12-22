@@ -21,7 +21,6 @@ type (
 
 const (
 	Sizeof64BitPointer  MemorySize  = 8
-	Alignof64BitPointer MemoryAlign = 8
 	SizeofSwampInt      MemorySize  = 4
 	SizeofSwampRune     MemorySize  = 4
 	SizeofSwampBool     MemorySize  = 1
@@ -29,6 +28,7 @@ const (
 	AlignOfSwampBool = MemoryAlign(SizeofSwampBool)
 	AlignOfSwampRune = MemoryAlign(SizeofSwampRune)
 	AlignOfSwampInt  = MemoryAlign(SizeofSwampInt)
+	Alignof64BitPointer MemoryAlign = 8
 )
 
 type StackRange uint16
