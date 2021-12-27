@@ -275,7 +275,7 @@ func (s *Stream) IntUnaryOperator(destination opcode_sp_type.TargetStackPosition
 	return c
 }
 
-func (s *Stream) Serialize() ([]byte, error) {
+func (s *Stream) Serialize() ([]byte, []OpcodeInfo, error) {
 	writer := NewOpCodeStream()
 	debugInfo := NewDebugInfo()
 
@@ -284,14 +284,16 @@ func (s *Stream) Serialize() ([]byte, error) {
 		if lbl != nil {
 			lbl.Label().Define(writer.programCounter())
 		} else {
-			debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition)
+			if err := debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition); err != nil {
+				panic(err)
+			}
 			instruction.s.Write(writer)
 		}
 	}
 
 	for _, label := range s.allLabels {
 		if !label.IsDefined() {
-			return nil, fmt.Errorf("Label %v not defined", label)
+			return nil, nil, fmt.Errorf("Label %v not defined", label)
 		}
 	}
 
@@ -300,10 +302,10 @@ func (s *Stream) Serialize() ([]byte, error) {
 
 	fixupErr := block.FixUpLabelInjects(writer.LabelInjects())
 	if fixupErr != nil {
-		return nil, fixupErr
+		return nil, nil, fixupErr
 	}
 
 	fixedUpOctets := block.Octets()
 
-	return fixedUpOctets, nil
+	return fixedUpOctets, debugInfo.infos, nil
 }

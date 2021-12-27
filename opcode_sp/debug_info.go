@@ -3,7 +3,6 @@ package opcode_sp
 import (
 	"encoding/binary"
 	"fmt"
-	"io"
 )
 
 type OpcodePosition uint
@@ -27,7 +26,6 @@ type OpcodeInfo struct {
 type DebugInfo struct {
 	lastOpcodePosition int
 	infos              []OpcodeInfo
-	octets             []byte
 }
 
 func NewDebugInfo() *DebugInfo {
@@ -41,6 +39,10 @@ func (d *DebugInfo) AddOpcodeSource(position OpcodePosition, filePosition FilePo
 		return fmt.Errorf("must have opcodes in ascending order")
 	}
 
+	if position > 0xf00 {
+		panic("too big bvalue")
+	}
+
 	info := OpcodeInfo{filePosition: filePosition, opcodePosition: position}
 	d.infos = append(d.infos, info)
 
@@ -49,27 +51,33 @@ func (d *DebugInfo) AddOpcodeSource(position OpcodePosition, filePosition FilePo
 	return nil
 }
 
-func (d *DebugInfo) writeUint16(v uint16) {
+
+type octetStream struct {
+	octets []byte
+}
+
+func (d *octetStream) writeUint16(v uint16) {
 	b := make([]byte, 2)
 	binary.LittleEndian.PutUint16(b, v)
 	d.octets = append(d.octets, b[:]...)
 }
 
-func (d *DebugInfo) Octets() ([]byte, error) {
-	d.writeUint16(uint16(len(d.infos)))
-
-	for _, info := range d.infos {
-		d.writeUint16(uint16(info.opcodePosition))
-		d.writeUint16(uint16(info.filePosition.SourceFileID))
-		d.writeUint16(uint16(info.filePosition.Start.Line))
-		d.writeUint16(uint16(info.filePosition.Start.Column))
+func SerializeDebugLines(infos []OpcodeInfo) ([]byte, error) {
+	stream := &octetStream{}
+	lastPosition := -1
+	for _, info := range infos {
+		if int(info.opcodePosition) <= lastPosition {
+			panic("opcode positions in wrong order")
+		}
+		if info.opcodePosition > 0xf00 {
+			panic("too big bvalue")
+		}
+		lastPosition = int(info.opcodePosition)
+		stream.writeUint16(uint16(info.opcodePosition))
+		stream.writeUint16(uint16(info.filePosition.SourceFileID))
+		stream.writeUint16(uint16(info.filePosition.Start.Line))
+		stream.writeUint16(uint16(info.filePosition.Start.Column))
 	}
 
-	return d.octets, nil
-}
-
-func (d *DebugInfo) Serialize(writer io.Writer) error {
-
-	_, err := writer.Write(d.octets)
-	return err
+	return stream.octets, nil
 }
