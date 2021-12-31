@@ -23,6 +23,14 @@ type OpcodeInfo struct {
 	opcodePosition OpcodePosition
 }
 
+type VariableInfo struct {
+	StartOpcodePosition OpcodePosition
+	EndOpcodePosition OpcodePosition
+	ScopeID uint
+	TypeID  uint32
+	Name string
+}
+
 type DebugInfo struct {
 	lastOpcodePosition int
 	infos              []OpcodeInfo

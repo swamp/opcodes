@@ -179,6 +179,12 @@ func (s *Stream) Label(label *opcode_sp_type.Label) error {
 	return nil
 }
 
+func (s *Stream) VariableStart(allocatedMemory opcode_sp_type.SourceStackPositionRange, startPositionLabel *opcode_sp_type.Label, filePosition FilePosition) error {
+	c := NewVariable(startPositionLabel, allocatedMemory)
+	s.addInstruction(c, filePosition)
+	return nil
+}
+
 func (s *Stream) BranchFalse(test opcode_sp_type.SourceStackPosition, jump *opcode_sp_type.Label,
 	filePosition FilePosition) *instruction_sp.BranchFalse {
 	c := instruction_sp.NewBranchFalse(test, jump)
@@ -280,14 +286,16 @@ func (s *Stream) Serialize() ([]byte, []OpcodeInfo, error) {
 	debugInfo := NewDebugInfo()
 
 	for _, instruction := range s.instructions {
-		lbl, _ := instruction.s.(*VirtualLabel)
-		if lbl != nil {
-			lbl.Label().Define(writer.programCounter())
-		} else {
-			if err := debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition); err != nil {
-				panic(err)
-			}
-			instruction.s.Write(writer)
+		switch t := instruction.s.(type) {
+			case *VirtualLabel:
+				t.Label().Define(writer.programCounter())
+			case *Variable:
+			case *VariableEnd:
+			default:
+				if err := debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition); err != nil {
+					panic(err)
+				}
+				instruction.s.Write(writer)
 		}
 	}
 
