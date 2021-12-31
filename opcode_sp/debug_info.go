@@ -3,6 +3,8 @@ package opcode_sp
 import (
 	"encoding/binary"
 	"fmt"
+
+	"github.com/swamp/opcodes/type"
 )
 
 type OpcodePosition uint
@@ -28,6 +30,7 @@ type VariableInfo struct {
 	EndOpcodePosition OpcodePosition
 	ScopeID uint
 	TypeID  uint32
+	StackPositionRange opcode_sp_type.SourceStackPositionRange
 	Name string
 }
 
