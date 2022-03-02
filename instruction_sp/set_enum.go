@@ -14,21 +14,23 @@ import (
 type SetEnum struct {
 	destination opcode_sp_type.TargetStackPosition
 	enumIndex   uint8
+	itemSize    opcode_sp_type.StackRange
 }
 
 func (c *SetEnum) Write(writer OpcodeWriter) error {
 	writer.Command(CmdSetEnum)
 	writer.TargetStackPosition(c.destination)
 	writer.EnumValue(c.enumIndex)
+	writer.StackRange(c.itemSize)
 
 	return nil
 }
 
 func NewSetEnum(destination opcode_sp_type.TargetStackPosition,
-	enumIndex uint8) *SetEnum {
-	return &SetEnum{destination: destination, enumIndex: enumIndex}
+	enumIndex uint8, itemSize opcode_sp_type.StackRange) *SetEnum {
+	return &SetEnum{destination: destination, enumIndex: enumIndex, itemSize: itemSize}
 }
 
 func (c *SetEnum) String() string {
-	return fmt.Sprintf("%s %v,%v", OpcodeToMnemonic(CmdSetEnum), c.destination, c.enumIndex)
+	return fmt.Sprintf("%s %v,%v (%v)", OpcodeToMnemonic(CmdSetEnum), c.destination, c.enumIndex, c.itemSize)
 }

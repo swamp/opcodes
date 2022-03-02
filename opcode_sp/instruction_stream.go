@@ -12,19 +12,15 @@ import (
 	opcode_sp_type "github.com/swamp/opcodes/type"
 )
 
-
 type InternalInstruction struct {
 	filePosition FilePosition
-	s Instruction
+	s            Instruction
 }
-
 
 type Stream struct {
 	instructions []InternalInstruction
 	allLabels    []*opcode_sp_type.Label
 }
-
-
 
 func NewStream() *Stream {
 	return &Stream{}
@@ -71,8 +67,8 @@ func (s *Stream) LoadBool(destination opcode_sp_type.TargetStackPosition,
 }
 
 func (s *Stream) SetEnum(destination opcode_sp_type.TargetStackPosition,
-	enumIndex uint8, filePosition FilePosition) *instruction_sp.SetEnum {
-	c := instruction_sp.NewSetEnum(destination, enumIndex)
+	enumIndex uint8, itemSize opcode_sp_type.StackRange, filePosition FilePosition) *instruction_sp.SetEnum {
+	c := instruction_sp.NewSetEnum(destination, enumIndex, itemSize)
 	s.addInstruction(c, filePosition)
 	return c
 }
@@ -287,15 +283,15 @@ func (s *Stream) Serialize() ([]byte, []OpcodeInfo, error) {
 
 	for _, instruction := range s.instructions {
 		switch t := instruction.s.(type) {
-			case *VirtualLabel:
-				t.Label().Define(writer.programCounter())
-			case *Variable:
-			case *VariableEnd:
-			default:
-				if err := debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition); err != nil {
-					panic(err)
-				}
-				instruction.s.Write(writer)
+		case *VirtualLabel:
+			t.Label().Define(writer.programCounter())
+		case *Variable:
+		case *VariableEnd:
+		default:
+			if err := debugInfo.AddOpcodeSource(OpcodePosition(len(writer.Octets())), instruction.filePosition); err != nil {
+				panic(err)
+			}
+			instruction.s.Write(writer)
 		}
 	}
 
